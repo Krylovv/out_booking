@@ -9,14 +9,25 @@ driver = webdriver.Chrome()
 
 driver.get("http://94.188.35.81:8081")
 driver.implicitly_wait(5)
+
+# find user
 search = driver.find_element(by=By.CLASS_NAME, value="input--DgMmg")
 search.send_keys("Ale")
-user = driver.find_element(by=By.CLASS_NAME, value="item--f7n44").click()
-driver.implicitly_wait(5)
+driver.find_element(by=By.CLASS_NAME, value="item--f7n44").click()
+
+# type in password
+with open('.env/secrets') as f:
+    password_line = f.readlines()
 password = driver.find_element(by=By.CLASS_NAME, value="input--DgMmg")
-password.send_keys("TEST")
-
-
-
+password.send_keys(password_line)
 time.sleep(5)
+driver.find_element(by=By.CLASS_NAME, value="keyboard-button.keyboard-submit-button").click()
+time.sleep(5)
+
+# logout section
+driver.find_element(by=By.CLASS_NAME, value="ui-btn.ui-btn--secondary.ui-btn--small").click()
+driver.find_element(by=By.CLASS_NAME, value="ui-btn.ui-btn--secondary.ui-btn--middle").click()
+
+
+time.sleep(10)
 driver.quit()
